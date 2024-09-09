@@ -1,0 +1,86 @@
+<?php
+
+// Base class Vehicle
+abstract class Vehicle {
+    private $make;
+    private $model;
+    private $year;
+
+    public function __construct($make, $model, $year) {
+        $this->make = $make;
+        $this->model = $model;
+        $this->year = $year;
+    }
+
+    final public function getDetails() {
+        return "Make: $this->make, Model: $this->model, Year: $this->year";
+    }
+
+    abstract public function describe();
+}
+
+// Car class that extends Vehicle
+class Car extends Vehicle {
+    private $numDoors;
+
+    public function __construct($make, $model, $year, $numDoors) {
+        parent::__construct($make, $model, $year);
+        $this->numDoors = $numDoors;
+    }
+
+    public function describe() {
+        return "This is a car";
+    }
+
+    public function getNumDoors() {
+        return $this->numDoors;
+    }
+}
+
+// Motorcycle class that extends Vehicle
+final class Motorcycle extends Vehicle {
+    public function __construct($make, $model, $year) {
+        parent::__construct($make, $model, $year);
+    }
+
+    public function describe() {
+        return "This is a motorcycle";
+    }
+}
+
+// Electric Vehicle interface
+interface ElectricVehicle {
+    public function chargeBattery();
+}
+
+// ElectricCar class that extends Car and implements ElectricVehicle
+class ElectricCar extends Car implements ElectricVehicle {
+    public function __construct($make, $model, $year, $numDoors) {
+        parent::__construct($make, $model, $year, $numDoors);
+    }
+
+    public function describe() {
+        return "This is an electric car";
+    }
+
+    public function chargeBattery() {
+        return "Charging battery...";
+    }
+}
+
+// Testing the implementation
+$car = new Car("Toyota", "Corolla", 2022, 4);
+echo $car->getDetails() . "\n";
+echo $car->describe() . "\n";
+echo "Number of doors: " . $car->getNumDoors() . "\n\n";
+
+$motorcycle = new Motorcycle("Honda", "CBR500R", 2020);
+echo $motorcycle->getDetails() . "\n";
+echo $motorcycle->describe() . "\n\n";
+
+$electricCar = new ElectricCar("Tesla", "Model 3", 2022, 4);
+echo $electricCar->getDetails() . "\n";
+echo $electricCar->describe() . "\n";
+echo $electricCar->chargeBattery() . "\n";
+
+?>
